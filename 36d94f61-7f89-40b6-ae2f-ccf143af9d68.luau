@@ -120,18 +120,21 @@ local function monitorar(player)
 	end
 end
 
--- GUI
-local gui = Instance.new("ScreenGui", game:GetService("CoreGui"))
-gui.ResetOnSpawn = false
+-- GUI (usando ScreenGui2 já existente no PlayerGui)
+local playerGui = LocalPlayer:WaitForChild("PlayerGui")
+local gui = playerGui:WaitForChild("ScreenGui2") -- ScreenGui já criada no jogo
 
-local frame = Instance.new("Frame", gui)
+-- Frame principal
+local frame = Instance.new("Frame")
 frame.Size = UDim2.new(0, 200, 0, 80)
 frame.Position = UDim2.new(0.5, -100, 0.5, -40)
 frame.BackgroundColor3 = Color3.fromRGB(100, 100, 100)
 frame.Active = true
 frame.Draggable = true
+frame.Parent = gui
 
-local button = Instance.new("TextButton", frame)
+-- Botão
+local button = Instance.new("TextButton")
 button.Size = UDim2.new(1, -20, 0, 50)
 button.Position = UDim2.new(0, 10, 0, 15)
 button.Text = "Detectar GD/Cb: OFF"
@@ -139,6 +142,18 @@ button.BackgroundColor3 = Color3.fromRGB(70, 70, 70)
 button.TextColor3 = Color3.fromRGB(255, 255, 255)
 button.Font = Enum.Font.SourceSansBold
 button.TextSize = 14
+button.Parent = frame
+
+-- Marca "2.0" no rodapé
+local marca = Instance.new("TextLabel")
+marca.Size = UDim2.new(0, 100, 0, 30)
+marca.Position = UDim2.new(0.5, -50, 1, -40) -- centralizado embaixo
+marca.BackgroundTransparency = 1
+marca.Text = "2.0"
+marca.TextColor3 = Color3.fromRGB(255, 255, 255)
+marca.Font = Enum.Font.SourceSansBold
+marca.TextScaled = true
+marca.Parent = gui
 
 -- Controle
 local ativo = false
