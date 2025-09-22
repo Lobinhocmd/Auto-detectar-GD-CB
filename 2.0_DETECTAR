@@ -69,14 +69,18 @@ local function ESP(player)
 	espAtivos[player] = conn
 end
 
--- Detecta [GD] ou [Cb]
+-- Detecta GD, Cb, FE, PE, BAC, CIE, OF
 local function checarJogador(player)
 	local stats = player:FindFirstChild("leaderstats")
 	if stats then
 		for _, nome in pairs({"Divisão", "Patente"}) do
 			local dado = stats:FindFirstChild(nome)
 			if dado and typeof(dado.Value) == "string" then
-				if dado.Value:find("%[GD%]") or dado.Value:find("%[Cb%]") then
+				local val = dado.Value
+				if val:find("%[GD%]") or val:find("%[Cb%]") 
+					or val:find("FE") or val:find("PE")
+					or val:find("BAC") or val:find("CIE") 
+					or val:find("OF") then
 					ESP(player)
 				end
 			end
@@ -166,7 +170,7 @@ button.MouseButton1Click:Connect(function()
 	if ativo then
 		StarterGui:SetCore("SendNotification", {
 			Title = "Auto ESP",
-			Text = "Detectando GD e Cb...",
+			Text = "Detectando GD, Cb e outras siglas...",
 			Duration = 3
 		})
 
